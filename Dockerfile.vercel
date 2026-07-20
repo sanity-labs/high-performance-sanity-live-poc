@@ -1,0 +1,38 @@
+# Single-image deployment of the Watt runtime (gateway + Next.js app).
+#
+# Vercel detects the `Dockerfile.vercel` marker, builds this image on every
+# deploy and runs it as a Vercel Function on Fluid compute, routing traffic to
+# the HTTP server listening on $PORT (default 80). See:
+# https://vercel.com/changelog/bring-your-dockerfile-to-vercel-functions
+#
+# Local test:
+#   docker build -f Dockerfile.vercel -t gateway-dedup-poc .
+#   docker run --rm -p 3000:3000 -e PORT=3000 gateway-dedup-poc
+#
+# Notes:
+# - The Studio (apps/studio) is not part of the image: content editing happens
+#   against Sanity Cloud, not the deployed runtime. No secrets are baked in.
+# - With `memory` dedup storage each container instance deduplicates
+#   independently; point the Valkey profile at a shared endpoint for
+#   cross-instance coordination.
+
+FROM node:24-bookworm-slim AS build
+WORKDIR /app
+
+RUN npm install -g pnpm@11.15.1
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps/gateway/package.json apps/gateway/
+COPY apps/next/package.json apps/next/
+COPY apps/studio/package.json apps/studio/
+RUN pnpm install --frozen-lockfile --filter '!studio'
+
+COPY . .
+RUN pnpm build
+
+ENV NODE_ENV=production
+ENV PLT_DEDUP=true
+ENV PLT_NEXT_WORKERS=1
+
+EXPOSE 80
+CMD ["pnpm", "start"]
