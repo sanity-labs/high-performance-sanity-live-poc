@@ -1,0 +1,37 @@
+{
+  "name": "gateway-dedup-poc",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm --filter web run build",
+    "start": "PLT_DEDUP=\"${PLT_DEDUP:-true}\" PLT_NEXT_WORKERS=\"${PLT_NEXT_WORKERS:-4}\" wattpm start",
+    "dev": "pnpm run build && concurrently --kill-others --names watt,studio --prefix-colors blue,magenta \"pnpm run start\" \"pnpm --filter studio dev\"",
+    "dev:no-dedup": "PLT_DEDUP=false pnpm run dev",
+    "seed": "node scripts/seed.mjs",
+    "mutate": "node scripts/mutate.mjs",
+    "herd": "node scripts/herd.mjs",
+    "lint": "oxlint --type-check",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.24.0",
+    "wattpm": "3.62.2"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3",
+    "oxfmt": "0.59.0",
+    "oxlint": "1.74.0",
+    "oxlint-tsgolint": "0.25.0",
+    "typescript": "6.0.3"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@11.15.1"
+}

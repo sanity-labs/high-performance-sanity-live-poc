@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.platformatic.dev/@platformatic/gateway/3.0.0.json",
+  "basePath": "/",
+  "server": {
+    "hostname": "127.0.0.1",
+    "port": 0,
+    "logger": {
+      "level": "warn"
+    }
+  },
+  "plugins": {
+    "paths": ["./stats-plugin.js"]
+  },
+  "gateway": {
+    "handler": "./proxy-handler.js",
+    "applications": [
+      {
+        "id": "next",
+        "proxy": {
+          "prefix": "/"
+        }
+      }
+    ],
+    "deduplication": {
+      "enabled": "{PLT_DEDUP}",
+      "storage": {
+        "adapter": "memory"
+      },
+      "routes": [
+        { "method": "GET", "path": "/" },
+        { "method": "GET", "path": "/blog" },
+        { "method": "GET", "path": "/blog/*" }
+      ],
+      "headers": [
+        "authorization",
+        "accept",
+        "accept-encoding",
+        "accept-language",
+        "rsc",
+        "next-router-prefetch",
+        "next-router-segment-prefetch",
+        "next-router-state-tree",
+        "next-url"
+      ],
+      "skipHeaders": ["cookie"],
+      "key": "./dedup-key.js"
+    }
+  }
+}

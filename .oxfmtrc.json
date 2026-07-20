@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": false,
+  "singleQuote": true,
+  "jsxSingleQuote": false,
+  "sortImports": true,
+  "ignorePatterns": ["pnpm-lock.yaml", "pnpm-workspace.yaml"]
+}

@@ -1,0 +1,10 @@
+packages:
+  - apps/*
+allowBuilds:
+  esbuild: true
+  msgpackr-extract: true
+  protobufjs: true
+  sharp: true
+minimumReleaseAgeExclude:
+  - '@sanity/client@7.24.0'
+  - next-sanity@13.1.4
