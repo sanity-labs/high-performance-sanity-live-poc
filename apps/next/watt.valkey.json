@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.platformatic.dev/@platformatic/next/3.0.0.json",
+  "logger": {
+    "level": "info"
+  },
+  "cache": {
+    "adapter": "valkey",
+    "url": "{PLT_VALKEY_URL}",
+    "prefix": "poc:next:",
+    "cacheComponents": true
+  }
+}

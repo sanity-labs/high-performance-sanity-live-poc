@@ -1,0 +1,8 @@
+# Optional: only needed for the Valkey scale-out profile (`pnpm dev:valkey`),
+# which shares gateway deduplication state and the Next.js cache across
+# multiple workers/instances. The default `pnpm dev` needs no services.
+services:
+  valkey:
+    image: 'valkey/valkey:8'
+    ports:
+      - '127.0.0.1:6379:6379'

@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "build": "pnpm --filter web run build",
-    "start": "PLT_DEDUP=\"${PLT_DEDUP:-true}\" PLT_NEXT_WORKERS=\"${PLT_NEXT_WORKERS:-4}\" wattpm start",
+    "start": "PLT_DEDUP=\"${PLT_DEDUP:-true}\" PLT_NEXT_WORKERS=\"${PLT_NEXT_WORKERS:-1}\" wattpm start",
+    "start:valkey": "PLT_DEDUP=\"${PLT_DEDUP:-true}\" PLT_NEXT_WORKERS=\"${PLT_NEXT_WORKERS:-4}\" PLT_VALKEY_URL=\"${PLT_VALKEY_URL:-redis://127.0.0.1:6379}\" wattpm start -c watt.valkey.json",
     "dev": "pnpm run build && concurrently --kill-others --names watt,studio --prefix-colors blue,magenta \"pnpm run start\" \"pnpm --filter studio dev\"",
     "dev:no-dedup": "PLT_DEDUP=false pnpm run dev",
+    "dev:valkey": "pnpm run build && concurrently --kill-others --names watt,studio --prefix-colors blue,magenta \"pnpm run start:valkey\" \"pnpm --filter studio dev\"",
     "seed": "node scripts/seed.mjs",
     "mutate": "node scripts/mutate.mjs",
     "herd": "node scripts/herd.mjs",
