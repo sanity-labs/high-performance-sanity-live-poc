@@ -1,4 +1,4 @@
-import { RocketIcon } from '@sanity/icons'
+import { RocketIcon } from '@sanity/icons/Rocket'
 import { Badge, Box, Button, Card, Code, Flex, Grid, Stack, Text, TextInput } from '@sanity/ui'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { definePlugin, useClient } from 'sanity'

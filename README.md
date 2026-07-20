@@ -94,6 +94,7 @@ Measured browser waves from a single publish (24 in-viewport links per tab, this
 | --------------------------------------------------- | ------------------------------: |
 | 3 tabs, next `16.2.4`, dedup off                    |               **201** (~67/tab) |
 | 3 tabs, next `16.3.0-preview.6`, dedup off          |                **97** (~32/tab) |
+| 3 tabs, next `16.3.0-preview.6`, dedup on           |      55 (53 leaders, 9 waiters) |
 | 6 tabs, next `16.3.0-preview.6`, dedup off          |                             157 |
 | 6 tabs, next `16.3.0-preview.6`, dedup on           |                  156 (1 waiter) |
 | 6 tabs, preview, dedup on, 4 workers + Valkey cache | 288, all tabs update coherently |
