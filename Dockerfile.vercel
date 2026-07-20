@@ -21,11 +21,14 @@ WORKDIR /app
 
 RUN npm install -g pnpm@11.15.1
 
+# The runtime never runs the Studio, but partial (filtered) installs make
+# pnpm's workspace state checks abort `pnpm build` without a TTY, so the whole
+# workspace is installed.
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/gateway/package.json apps/gateway/
 COPY apps/next/package.json apps/next/
 COPY apps/studio/package.json apps/studio/
-RUN pnpm install --frozen-lockfile --filter '!studio'
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 RUN pnpm build
