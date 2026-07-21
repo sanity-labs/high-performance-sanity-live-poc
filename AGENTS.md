@@ -80,3 +80,11 @@ Headless scripts (`pnpm seed`, `pnpm mutate`) read the same `STUDIO_AUTH_TOKEN` 
 - `.env` files are gitignored; `.env.template` files carry only public defaults, which are also baked into the code as fallbacks — `pnpm dev` works with zero configuration.
 - The Valkey profile expects a Redis-compatible server on `127.0.0.1:6379` (`docker compose up -d valkey`, or `apt-get install valkey-server` on Debian/Ubuntu).
 - Do not use machine-specific paths in code or docs; everything runs relative to the repo root.
+
+## Cursor Cloud specific instructions
+
+- Startup layer runs `pnpm install` (provisions Node 24 automatically). It does **not** start any service — start them yourself. Standard commands live in the `## Commands` table above (`pnpm dev`, `pnpm herd`, `pnpm lint`, etc.).
+- `pnpm dev` builds Next then runs Watt (gateway `:3000` + Next worker) and Studio (`:3333`) in the foreground via `concurrently`; run it in a background terminal (e.g. tmux) and tail its log. `/blog`, `/api/stats`, and the Studio all come up within ~10s.
+- Live content updates only appear in an open, SanityLive-subscribed browser tab; `/blog` and `/blog/[slug]` are statically prerendered, so a headless `curl` after a publish will still show the old title. To demo the live refresh + dedup, open `/blog` in a browser and publish (Studio Load test tool, or `pnpm mutate` from a terminal).
+- Token caveat (non-obvious): the repo/scripts read `STUDIO_AUTH_TOKEN`, but in this environment that injected secret returns `401 Unauthorized - Session not found`. The valid write token is the `SANITY_TEST_STUDIO_AUTH_TOKEN` secret. For authenticated writes (`pnpm seed`, `pnpm mutate`, MCP writes) export it first: `export STUDIO_AUTH_TOKEN="$SANITY_TEST_STUDIO_AUTH_TOKEN"`. Never print/log/commit either token value. Public reads (rendering `/blog`) need no token.
+- `pnpm format:check` reports one pre-existing failure on the committed, Next-generated `apps/next/next-env.d.ts` (marked "should not be edited"); this is unrelated to your changes. `pnpm lint` passes (warnings only).
