@@ -1,0 +1,54 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import", "react", "nextjs"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "options": {
+    "typeAware": true,
+    "typeCheck": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2024": true
+  },
+  "settings": {
+    "react": {
+      "version": "19.2.7"
+    },
+    "next": {
+      "rootDir": ["apps/next"]
+    }
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "import/no-unassigned-import": ["error", { "allow": ["**/*.css"] }],
+    "eslint/no-underscore-dangle": "off"
+  },
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/.sanity/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/out/**",
+    "**/next-env.d.ts"
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs"],
+      "rules": {
+        "typescript/no-floating-promises": "off",
+        "typescript/no-misused-promises": "off",
+        "typescript/no-unsafe-assignment": "off",
+        "typescript/no-unsafe-call": "off",
+        "typescript/no-unsafe-member-access": "off",
+        "typescript/no-unsafe-return": "off",
+        "typescript/no-unsafe-argument": "off"
+      }
+    }
+  ]
+}

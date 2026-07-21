@@ -1,0 +1,22 @@
+{
+  "name": "studio",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev --port 3333 --no-auto-updates",
+    "build": "sanity build --no-auto-updates"
+  },
+  "dependencies": {
+    "@sanity/icons": "^5.0.0",
+    "@sanity/ui": "^3.3.5",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "sanity": "6.5.0",
+    "styled-components": "^6.1.15"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "typescript": "6.0.3"
+  }
+}

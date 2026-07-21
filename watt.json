@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.platformatic.dev/@platformatic/runtime/3.0.0.json",
+  "entrypoint": "gateway",
+  "applications": [
+    {
+      "id": "gateway",
+      "path": "./apps/gateway"
+    },
+    {
+      "id": "next",
+      "path": "./apps/next",
+      "workers": "{PLT_NEXT_WORKERS}"
+    }
+  ],
+  "server": {
+    "hostname": "0.0.0.0",
+    "port": "{PORT}"
+  },
+  "logger": {
+    "level": "info"
+  },
+  "metrics": {
+    "hostname": "127.0.0.1",
+    "port": 9090
+  }
+}
